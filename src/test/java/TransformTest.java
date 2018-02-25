@@ -1,7 +1,3 @@
-// CHECKSTYLE:OFF:FileLength
-// CHECKSTYLE:OFF:LineLength
-// CHECKSTYLE:OFF:MagicNumber
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -69,7 +65,6 @@ public class TransformTest {
     /**
      * Class for storing inputs to position shift tests.
      */
-    @SuppressWarnings("checkstyle:visibilitymodifier")
     public static class PositionShiftTestInput {
         /** Left shift. */
         int shiftLeft;
@@ -151,7 +146,6 @@ public class TransformTest {
     /**
      * Class for storing inputs to rotation and flip test.
      */
-    @SuppressWarnings("checkstyle:visibilitymodifier")
     public static class RotateAndFlipTestInput {
         /** Left rotation. */
         boolean rotateLeft;
@@ -242,7 +236,6 @@ public class TransformTest {
     /**
      * Class for storing inputs to color shift tests.
      */
-    @SuppressWarnings("checkstyle:visibilitymodifier")
     public static class ColorShiftTestInput {
         /** Red shift. */
         int redShift;
@@ -321,7 +314,6 @@ public class TransformTest {
     /**
      * Class for storing inputs to expand tests.
      */
-    @SuppressWarnings("checkstyle:visibilitymodifier")
     public static class ExpandTestInput {
         /** Vertical expand factor. */
         int expandVertical;
