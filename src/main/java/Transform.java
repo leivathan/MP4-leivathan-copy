@@ -23,11 +23,11 @@ public class Transform {
     /**
      *
      */
-    private static int arbitrarilyHigh = 245;
+    private static final int ARBITRARILY_HIGH = 245;
     /**
      *
      */
-    private static int ten = 10;
+    private static final int TEN = 10;
 
     /**
      *
@@ -37,13 +37,30 @@ public class Transform {
     /**
      *
      * @param originalImage Image to be shifted.
-     * @param amount Amount to shift by.
-     * @param direction The direction of the shift.
+     * @param shiftx Amount to shift x by.
+     * @param shifty Amount to shift y by.
      * @return an image array with the pixels shifted horizontally.
      */
     public static RGBAPixel[][] shift(final RGBAPixel[][] originalImage,
-                                                final int amount, final String direction) {
-        return originalImage;
+                                                final int shiftx,
+                                      final int shifty) {
+        RGBAPixel[][]newImage = new RGBAPixel[originalImage.length][originalImage[0].length];
+        for (int i = 0; i < originalImage.length; i++) {
+            for (int j = 0; j < originalImage[0].length; j++) {
+                newImage[i][j] = RGBAPixel.getFillValue();
+            }
+        }
+        for (int i = 0; i < originalImage.length; i++) {
+            for (int j = 0; j < originalImage[0].length; j++) {
+                if (i + shiftx < 0 || i + shiftx > originalImage.length - 1
+                        || j + shifty < 0 || j + shifty > originalImage[i].length - 1) {
+                    continue;
+                } else {
+                    newImage[i + shiftx][j + shifty] = originalImage[i][j];
+                }
+            }
+        }
+        return newImage;
     }
 
     /**
@@ -112,7 +129,7 @@ public class Transform {
      * @return an image array that has been modified.
      */
     public static RGBAPixel[][] shiftLeft(final RGBAPixel[][] originalImage, final int amount) {
-        return originalImage;
+        return Transform.shift(originalImage, -1 * amount, 0);
     }
     /**
      *
@@ -121,7 +138,7 @@ public class Transform {
      * @return color shifted image
      */
     public static RGBAPixel[][] shiftRight(final RGBAPixel[][] originalImage, final int amount) {
-        return originalImage;
+        return Transform.shift(originalImage, amount, 0);
     }
     /**
      *
@@ -130,7 +147,7 @@ public class Transform {
      * @return color shifted image
      */
     public static RGBAPixel[][] shiftUp(final RGBAPixel[][] originalImage, final int amount) {
-        return originalImage;
+        return Transform.shift(originalImage, 0, -1 * amount);
     }
     /**
      *
@@ -139,7 +156,7 @@ public class Transform {
      * @return color shifted image
      */
     public static RGBAPixel[][] shiftDown(final RGBAPixel[][] originalImage, final int amount) {
-        return originalImage;
+        return Transform.shift(originalImage, 0, amount);
     }
     /**
      *
@@ -302,8 +319,9 @@ public class Transform {
         RGBAPixel[][] newImage = new RGBAPixel[originalImage.length][originalImage[0].length];
         for (int i = 0; i < originalImage.length; i++) {
             for (int j = 0; j < originalImage[i].length; j++) {
-                if (originalImage[i][j].getGreen() >= arbitrarilyHigh
-                        && originalImage[i][j].getRed() <= ten && originalImage[i][j].getBlue() <= ten) {
+                if (originalImage[i][j].getGreen() >= ARBITRARILY_HIGH
+                        && originalImage[i][j].getRed() <= TEN
+                        && originalImage[i][j].getBlue() <= TEN) {
                     newImage[i][j] = RGBAPixel.getFillValue();
                 } else {
                     newImage[i][j] = originalImage[i][j];
