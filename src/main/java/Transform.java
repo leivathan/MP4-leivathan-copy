@@ -65,6 +65,28 @@ public class Transform {
 
     /**
      *
+     * @param originalImage the image to flip
+     * @param upRight a decider int for flipping vertically or horizontally
+     * @return a copy array
+     */
+
+    public static RGBAPixel[][]flip(final RGBAPixel[][] originalImage, final int upRight){
+        RGBAPixel[][] newImage = new RGBAPixel[originalImage.length][originalImage[0].length];
+        for (int i = 0; i < originalImage.length - 1; i++) {
+            for (int j = 0; j < originalImage[i].length - 1; j++) {
+                if (upRight == 1) {
+                    newImage[i][j] = originalImage[originalImage.length - 1 - i][j];
+                }
+                if (upRight == 2) {
+                    newImage[i][j] = originalImage[i][originalImage[i].length - 1 - j];
+                }
+            }
+        }
+        return newImage;
+    }
+
+    /**
+     *
      * @param originalImage the image to be changed.
      * @param red red amount
      * @param blue blue amount
@@ -292,7 +314,7 @@ public class Transform {
      * @return a thing
      */
     public static RGBAPixel[][] flipVertical(final RGBAPixel[][]originalImage) {
-        return originalImage;
+        return Transform.flip(originalImage, 1);
     }
     /**
      *
@@ -300,7 +322,7 @@ public class Transform {
      * @return a thing
      */
     public static RGBAPixel[][] flipHorizontal(final RGBAPixel[][]originalImage) {
-        return originalImage;
+        return Transform.flip(originalImage, 2);
     }
     /**
      *
@@ -308,7 +330,7 @@ public class Transform {
      * @return a thing
      */
     public static RGBAPixel[][] mystery(final RGBAPixel[][]originalImage) {
-        return originalImage;
+        return null;
     }
     /**
      *
