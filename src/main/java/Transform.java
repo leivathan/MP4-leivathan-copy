@@ -109,7 +109,7 @@ public class Transform {
                 int shiftValueX = (int) (-shiftX + verticenter);
                 if (shiftValueY >= originalImage.length || shiftValueY < 0
                         || shiftValueX >= originalImage[row].length || shiftValueX < 0) {
-                    continue;
+                    newImage[row][col] = RGBAPixel.getFillValue();
                 } else {
                     newImage[row][col] = originalImage[shiftValueY][shiftValueX];
                 }
