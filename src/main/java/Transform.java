@@ -70,7 +70,7 @@ public class Transform {
      * @return a copy array
      */
 
-    public static RGBAPixel[][]flip(final RGBAPixel[][] originalImage, final int upRight){
+    public static RGBAPixel[][]flip(final RGBAPixel[][] originalImage, final int upRight) {
         RGBAPixel[][] newImage = new RGBAPixel[originalImage.length][originalImage[0].length];
         for (int i = 0; i < originalImage.length - 1; i++) {
             for (int j = 0; j < originalImage[i].length - 1; j++) {
@@ -85,6 +85,38 @@ public class Transform {
         return newImage;
     }
 
+    /**
+     *
+     * @param originalImage The image to be rotated
+     * @return a copy of the image rotated
+     */
+    public static RGBAPixel[][] rotate(final RGBAPixel[][] originalImage) {
+        RGBAPixel[][] newImage = new RGBAPixel[originalImage.length][originalImage[0].length];
+        double horicenter = 0.0;
+        double verticenter = 0.0;
+        double shiftX = 0.0;
+        double shiftY = 0.0;
+        for (int i = 0; i < newImage.length; i++) {
+            for (int j = 0; j < newImage[i].length; j++) {
+                newImage[i][j] = RGBAPixel.getFillValue();
+            }
+        }
+        for (int row = 0; row < originalImage.length; row++) {
+            shiftX = row - horicenter;
+            for (int col = 0; col < originalImage[row].length; col++) {
+                shiftY = col - verticenter;
+                int shiftValueY = (int) (shiftY + horicenter);
+                int shiftValueX = (int) (-shiftX + verticenter);
+                if (shiftValueY >= originalImage.length || shiftValueY < 0
+                        || shiftValueX >= originalImage[row].length || shiftValueX < 0) {
+                    continue;
+                } else {
+                    newImage[row][col] = originalImage[shiftValueY][shiftValueX];
+                }
+            }
+        }
+        return newImage;
+    }
     /**
      *
      * @param originalImage the image to be changed.
@@ -298,7 +330,7 @@ public class Transform {
      * @return a thing
      */
     public static RGBAPixel[][] rotateLeft(final RGBAPixel[][]originalImage) {
-        return originalImage;
+        return Transform.rotate(Transform.rotate(Transform.rotate(originalImage)));
     }
     /**
      *
@@ -306,7 +338,7 @@ public class Transform {
      * @return a thing
      */
     public static RGBAPixel[][] rotateRight(final RGBAPixel[][]originalImage) {
-        return originalImage;
+        return Transform.rotate(originalImage);
     }
     /**
      *
