@@ -96,11 +96,11 @@ public class Transform {
         double verticenter = 0.0;
         double shiftX = 0.0;
         double shiftY = 0.0;
-        for (int i = 0; i < newImage.length; i++) {
-            for (int j = 0; j < newImage[i].length; j++) {
-                newImage[i][j] = RGBAPixel.getFillValue();
-            }
-        }
+//        for (int i = 0; i < newImage.length; i++) {
+//            for (int j = 0; j < newImage[i].length; j++) {
+//                newImage[i][j] = RGBAPixel.getFillValue();
+//            }
+//        }
         for (int row = 0; row < originalImage.length; row++) {
             shiftX = row - horicenter;
             for (int col = 0; col < originalImage[row].length; col++) {
