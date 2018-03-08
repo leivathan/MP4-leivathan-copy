@@ -92,15 +92,15 @@ public class Transform {
      */
     public static RGBAPixel[][] rotate(final RGBAPixel[][] originalImage) {
         RGBAPixel[][] newImage = new RGBAPixel[originalImage.length][originalImage[0].length];
-        double horicenter = 0.0;
-        double verticenter = 0.0;
+        double horicenter = (originalImage.length - 1) / 2.0;
+        double verticenter = (originalImage[0].length - 1) / 2.0;
         double shiftX = 0.0;
         double shiftY = 0.0;
-//        for (int i = 0; i < newImage.length; i++) {
-//            for (int j = 0; j < newImage[i].length; j++) {
-//                newImage[i][j] = RGBAPixel.getFillValue();
-//            }
-//        }
+        for (int i = 0; i < newImage.length; i++) {
+            for (int j = 0; j < newImage[i].length; j++) {
+                newImage[i][j] = RGBAPixel.getFillValue();
+            }
+        }
         for (int row = 0; row < originalImage.length; row++) {
             shiftX = row - horicenter;
             for (int col = 0; col < originalImage[row].length; col++) {
@@ -109,9 +109,16 @@ public class Transform {
                 int shiftValueX = (int) (-shiftX + verticenter);
                 if (shiftValueY >= originalImage.length || shiftValueY < 0
                         || shiftValueX >= originalImage[row].length || shiftValueX < 0) {
-                    newImage = Transform.colourShift(newImage, -FULL_PIXEL, -FULL_PIXEL, -FULL_PIXEL, 0);
+                    continue;
                 } else {
                     newImage[row][col] = originalImage[shiftValueY][shiftValueX];
+                }
+            }
+        }
+        for (int i = 0; i < newImage.length; i++) {
+            for (int j = 0; j < newImage[i].length; j++) {
+                if (newImage[i][j] == null) {
+                    newImage[i][j].setRed(FULL_PIXEL);
                 }
             }
         }
