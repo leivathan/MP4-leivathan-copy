@@ -65,6 +65,67 @@ public class Transform {
 
     /**
      *
+     * @param originalImage the image to expand
+     * @param amountX the amount to expand the x values by
+     * @param amountY the amount to expand the y values by
+     * @param upRight the decider of expanding vertically or horizontally
+     *
+     * @return an expanded copy of the original image
+     */
+    public static RGBAPixel[][] expand(final RGBAPixel[][] originalImage,
+                                       final int amountX, final int amountY, final int upRight) {
+        RGBAPixel[][] newImage
+                = new RGBAPixel[originalImage.length][originalImage[0].length];
+        for (int i = 0; i < newImage.length; i++) {
+            for (int j = 0; j < newImage[0].length; j++) {
+                newImage[i][j] = RGBAPixel.getFillValue();
+            }
+        }
+        if (upRight == 0) {
+            RGBAPixel[][] extendImage
+                    = new RGBAPixel[originalImage.length * amountX][originalImage[0].length];
+            int counter = -1;
+            int countwo = (extendImage.length / 2) - (newImage.length / 2);
+            for (int i = 0; i < originalImage.length; i++) {
+                for (int count = 0; count < amountX; count++) {
+                    counter++;
+                    for (int j = 0; j < originalImage[0].length; j++) {
+                        extendImage[counter][j] = new RGBAPixel(originalImage[i][j]);
+                    }
+                }
+            }
+            for (int i = 0; i < newImage.length; i++) {
+                for (int j = 0; j < newImage[i].length; j++) {
+                    newImage[i][j] = extendImage[countwo][j];
+                }
+                countwo++;
+            }
+        }
+        if (upRight == 1) {
+            RGBAPixel[][] extendImage
+                    = new RGBAPixel[originalImage.length][originalImage[0].length * amountY];
+            int counter = -1;
+            int countwo = (extendImage[0].length / 2) - (newImage[0].length / 2);
+            for (int j = 0; j < originalImage[0].length; j++) {
+                for (int count = 0; count < amountY; count++) {
+                    counter++;
+                    for (int i = 0; i < originalImage.length; i++) {
+                        extendImage[i][counter] = new RGBAPixel(originalImage[i][j]);
+                    }
+                }
+            }
+            for (int j = 0; j < newImage[0].length; j++) {
+                for (int i = 0; i < newImage.length; i++) {
+                    newImage[i][j] = extendImage[i][countwo];
+                }
+                countwo++;
+            }
+        }
+        return newImage;
+    }
+
+    /**
+     *
      * @param originalImage the image to flip
      * @param upRight a decider int for flipping vertically or horizontally
      * @return a copy array
@@ -112,13 +173,6 @@ public class Transform {
                     continue;
                 } else {
                     newImage[row][col] = originalImage[shiftValueY][shiftValueX];
-                }
-            }
-        }
-        for (int i = 0; i < newImage.length; i++) {
-            for (int j = 0; j < newImage[i].length; j++) {
-                if (newImage[i][j] == null) {
-                    newImage[i][j].setRed(FULL_PIXEL);
                 }
             }
         }
@@ -309,7 +363,7 @@ public class Transform {
      */
     public static RGBAPixel[][] expandVertical(final RGBAPixel[][] originalImage,
                                                final int amount) {
-        return originalImage;
+        return Transform.expand(originalImage, 1, amount, 1);
     }
     /**
      *
@@ -329,7 +383,7 @@ public class Transform {
      */
     public static RGBAPixel[][] expandHorizontal(final RGBAPixel[][] originalImage,
                                                  final int amount) {
-        return originalImage;
+        return Transform.expand(originalImage, amount, 1, 0);
     }
     /**
      *
